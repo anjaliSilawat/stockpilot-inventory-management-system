@@ -1,4 +1,4 @@
-# CapsuleHub — Inventory & Order Management System
+# StockPilot — Inventory & Order Management System
 
 ## Live Links
 
@@ -7,12 +7,11 @@
 - Backend Health Check: https://ethara-inventory-api-zf9s.onrender.com/health
 - Docker Hub Image: https://hub.docker.com/r/anjalisilawat/ethara-inventory-backend
 
-A full-stack assessment project for managing **products, customers, orders, and inventory**. The application enforces inventory rules server-side, prevents orders that exceed available stock, and records every stock movement for traceability.
+A full-stack system for managing **products, customers, orders, and inventory**. The application enforces inventory rules server-side, prevents orders that exceed available stock, and records every stock movement for traceability.
 
+## Key features
 
-## Assessment requirements covered
-
-- React responsive frontend for products, customers, orders, and inventory tracking
+- React + TypeScript responsive frontend for products, customers, orders, and inventory tracking
 - Python FastAPI REST API
 - PostgreSQL persistence
 - Unique product SKU and unique customer-email validation
@@ -27,7 +26,7 @@ A full-stack assessment project for managing **products, customers, orders, and 
 ## Architecture
 
 ```text
-React (Vite) frontend
+React + TypeScript (Vite) frontend
         |
         | HTTP / JSON
         v
@@ -57,7 +56,7 @@ FastAPI backend  --->  PostgreSQL
 │   │   ├── services.py       # Transactional order / inventory logic
 │   │   └── main.py
 │   └── Dockerfile
-├── frontend/                # React + Vite app
+├── frontend/                # React + TypeScript + Vite app
 │   ├── src/
 │   └── Dockerfile
 ├── docker-compose.yml
@@ -76,7 +75,7 @@ FastAPI backend  --->  PostgreSQL
 ```bash
 # 1. Clone the repository
  git clone <YOUR_GITHUB_REPOSITORY_URL>
- cd ethara-inventory-management-system
+ cd stockpilot-inventory-management-system
 
 # 2. Create a local environment file
  cp .env.example .env
@@ -127,7 +126,7 @@ npm install
 npm run dev
 ```
 
-The Vite development server runs at `http://localhost:5173` by default.
+The Vite development server runs at `http://localhost:5173` by default. `npm run build` type-checks the project with `tsc` before bundling.
 
 ## API overview
 
@@ -158,33 +157,23 @@ POST /api/v1/orders
 
 If any requested quantity is unavailable, the API returns HTTP `409 Conflict` and does not deduct stock for any item.
 
-## Deployment plan
+## Deployment
 
-Use three independently deployable services:
+Deployed as three independently deployable services:
 
-1. **PostgreSQL:** create a managed PostgreSQL database and copy its connection string into the backend `DATABASE_URL` environment variable.
-2. **Backend:** deploy `backend/` using its Dockerfile. Set `DATABASE_URL`, `FRONTEND_ORIGINS`, and `AUTO_SEED=true` initially. The public service URL should expose `/health` and `/docs`.
-3. **Frontend:** deploy `frontend/` as a static site. During its build set `VITE_API_BASE_URL` to `https://<your-backend-domain>/api/v1` and redeploy.
-4. Update the backend `FRONTEND_ORIGINS` to include the final frontend URL, then restart/redeploy the backend.
+1. **PostgreSQL:** a managed PostgreSQL database; its connection string is set as the backend `DATABASE_URL` environment variable.
+2. **Backend:** deployed from `backend/` using its Dockerfile, exposing `/health` and `/docs`.
+3. **Frontend:** deployed from `frontend/` as a static site, built with `VITE_API_BASE_URL` pointing at the backend's public URL.
 
-### Docker Hub submission image
-
-After replacing `<dockerhub-username>` with your Docker Hub user name:
+### Publishing the backend image
 
 ```bash
-docker build -t <dockerhub-username>/capsulehub-inventory-backend:latest ./backend
+docker build -t <dockerhub-username>/stockpilot-inventory-backend:latest ./backend
 docker login
-docker push <dockerhub-username>/capsulehub-inventory-backend:latest
+docker push <dockerhub-username>/stockpilot-inventory-backend:latest
 ```
 
-Your form submission needs:
-
-- GitHub repository: `https://github.com/<username>/ethara-inventory-management-system`
-- Docker Hub backend image: `https://hub.docker.com/r/<dockerhub-username>/capsulehub-inventory-backend`
-- Frontend hosted URL: `https://<your-frontend-domain>`
-- Backend hosted URL: `https://<your-backend-domain>/health`
-
-## Suggested 3-minute reviewer demo
+## Demo walkthrough
 
 1. Open the dashboard and point out product, customer, order, low-stock, and audit information.
 2. Create a new product with an SKU and stock quantity.
@@ -194,6 +183,6 @@ Your form submission needs:
 6. Cancel the valid order. Show restored stock and the `RETURN_IN` audit record.
 7. Open `/docs` and `/health` to show API usability and deployment readiness.
 
-## Scope note
+## Scope
 
-Authentication and role-based access control are intentionally out of scope because the assessment specification does not require them. The backend remains the source of truth for all validation; the frontend only improves usability.
+Authentication and role-based access control are intentionally out of scope for this version. The backend remains the source of truth for all validation; the frontend only improves usability.

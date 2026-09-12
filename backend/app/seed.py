@@ -39,7 +39,7 @@ def seed_database(db: Session) -> None:
         Product(
             sku="CAP-LID-SPORT",
             name="Sport Lid Replacement",
-            description="Leak-resistant sport lid compatible with CapsuleHub bottles.",
+            description="Leak-resistant sport lid compatible with StockPilot bottles.",
             unit_price=Decimal("249.00"),
             quantity_in_stock=5,
             reorder_level=8,

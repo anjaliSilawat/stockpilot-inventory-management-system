@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    app_name: str = "CapsuleHub Inventory API"
+    app_name: str = "StockPilot Inventory API"
     api_v1_prefix: str = "/api/v1"
     database_url: str
     frontend_origins: str = "http://localhost:5173,http://localhost:3000"

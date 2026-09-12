@@ -39,7 +39,7 @@ app.add_middleware(
 
 @app.get("/health", tags=["Health"])
 def health_check():
-    return {"status": "ok", "service": "capsulehub-inventory-api"}
+    return {"status": "ok", "service": "stockpilot-inventory-api"}
 
 
 app.include_router(products.router, prefix=settings.api_v1_prefix)
