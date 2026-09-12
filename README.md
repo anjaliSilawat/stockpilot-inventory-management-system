@@ -5,6 +5,7 @@
 - Frontend: https://stockpilot-inventory-management-sys.vercel.app
 - Backend API Documentation: https://stockpilot-inventory-api.onrender.com/docs
 - Backend Health Check: https://stockpilot-inventory-api.onrender.com/health
+- Docker Hub Image: https://hub.docker.com/r/anjalisilawat/stockpilot-inventory-backend
 
 A full-stack system for managing **products, customers, orders, and inventory**. The application enforces inventory rules server-side, prevents orders that exceed available stock, and records every stock movement for traceability.
 
